@@ -129,20 +129,40 @@ console.log(newTask);
   descriptionEl.val('');
 }
 
-// // Todo: create a function to handle deleting a task
-// function handleDeleteTask(event) {
+// Todo: create a function to handle deleting a task
+function handleDeleteTask(event) {
 
-// }
+        const taskId = $(this).attr('data-project-id');
+        const taskList = readTasksFromStorage();
+      
+        // ? Remove project from the array. There is a method called `filter()` for this that is better suited which we will go over in a later activity. For now, we will use a `forEach()` loop to remove the project.
+        taskList.forEach((task) => {
+          if (task.id === taskId) {
+            taskList.splice(taskList.indexOf(task), 1);
+          }
+        });
 
-// // Todo: create a function to handle dropping a task into a new status lane
-// function handleDrop(event, ui) {
+    saveTasksToStorage(taskList);
 
-// }
+    renderTaskList();        
+
+}
+
+
+// Todo: create a function to handle dropping a task into a new status lane
+function handleDrop(event, ui) {
+
+}
 
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
+    renderTaskList();
+
     taskSubmitEl.on('submit', handleAddTask);
+
+    projectDisplayEl.on('click', '.btn-delete-project', handleDeleteTask);
+
 });
 
 $(function () {
